@@ -47,8 +47,16 @@ export class MetricQueryHandler extends QueryHandler {
     const collection = this.db.collection("Metrics");
 
     const exp = isSuccessful
-      ? { $expr: { $gte: ["$value", "$target"] } }
-      : { $expr: { $lt: ["$value", "$target"] } };
+      ? {
+          $expr: {
+            $gte: [{ $arrayElemAt: ["$values", -1] }, "$target"],
+          },
+        }
+      : {
+          $expr: {
+            $lt: [{ $arrayElemAt: ["$values", -1] }, "$target"],
+          },
+        };
 
     return collection.find(exp).toArray();
   };
