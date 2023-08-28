@@ -32,7 +32,7 @@ With the readAPI, the inputs are in query params that can be played with.
 I took some liberties here with the design. The main points about this implementation are:
 -  The aggregate is simpler. Events are always passed to it, and it doesn't create events in its own.  Events change the aggregate state, it stores the events/version, and flushes them on commit. The aggregate also aborts if an event would lead to an invalid state.
 - The aggregate constructor is the applier of the creation event. It takes the event as input, and is the only way the aggregate can be instantiated.
-- The command handler has more reponsibilities: it manges instantiating the events, applying them to the aggregate, and persisting. It's responsile for avoiding posible side-effects.
+- The command handler has more reponsibilities: it manges instantiating the events, applying them to the aggregate, and persisting. It's responsile for managing posible side-effects.
 - The event handler acts only on new events and does not rehydrate. This is easy with this infrastructure beause we have a guarantee that events will come in order, and will keep blocking the hadnelr and retrying on failure (for up to 24h). We'd still want a way to rehydrate and overwrite the read model as a backup plan, though,
 
 ### Architecture
