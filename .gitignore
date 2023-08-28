@@ -1,0 +1,15 @@
+*.js
+*.d.ts
+**/tsconfig.tsbuildinfo
+node_modules
+**/dist/*
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+packages/core/src/local.ts
+.vscode
+**/*.DS_Store
+**/*.env
+
+!/**/jest.config.js
