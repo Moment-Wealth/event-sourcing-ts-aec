@@ -9,7 +9,9 @@ export class DynamoEventStore implements IEventStore {
 
   constructor(tableName: string) {
     this.tableName = tableName;
-    this.documentClient = new DocumentClient();
+    this.documentClient = new DocumentClient({
+      region: process.env.AWS_REGION,
+    });
   }
 
   async appendEvents(aggregateId: string, events: Event[]): Promise<void> {
